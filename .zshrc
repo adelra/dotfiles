@@ -101,47 +101,9 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 export PATH=~/miniconda3/bin:$PATH
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/rahimia/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/rahimia/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/rahimia/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/rahimia/miniconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
 
-export DOCKER_HOST=tcp://localhost:2375
-alias explorer='explorer.exe .'
 alias docker_clean_images='docker rmi $(docker images -a --filter=dangling=true -q)'
-alias julia='~/julia/julia'
-alias gpu='ssh -L 8877:localhost:8888 adelr@143.8.39.158'
 
 if [ "$TMUX" = "" ]; then tmux; fi
-
-alias jup="jupyter notebook --port=8877 --ip='*' --NotebookApp.token='' --NotebookApp.password=''"
-
-## Docker engine
-DOCKER_SOCK="/mnt/wsl/shared-docker/docker.sock"
-test -S "$DOCKER_SOCK" && export DOCKER_HOST="unix://$DOCKER_SOCK"
-DOCKER_DIR="/mnt/wsl/shared-docker"
-export DOCKER_HOST="unix://$DOCKER_SOCK"
-DOCKER_DISTRO="Ubuntu-20.04"
-
-# Start Docker daemon automatically when logging in if not running.
-RUNNING=`ps aux | grep dockerd | grep -v grep`
-if [ ! -S "$DOCKER_SOCK" ]; then
-    mkdir -pm o=,ug=rwx "$DOCKER_DIR"
-    chgrp docker "$DOCKER_DIR"
-fi
-if [ -z "$RUNNING" ]; then
-    sudo dockerd > /dev/null 2>&1 &
-    disown
-fi
 
 neofetch
